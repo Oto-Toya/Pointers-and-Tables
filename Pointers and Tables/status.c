@@ -81,8 +81,6 @@ const StatusEntry* LookupStatus(int code) {
     return NULL;
     // Example of accessing the last element:
 	// int lastCode =
-
-    // TODO: Implement search using pointers only.
 }
 
 /* name: PrintRange
@@ -99,6 +97,7 @@ void PrintRange(FILE* stream, int lo, int hi) {
 	const StatusEntry* end = LookupStatus(hi);          // find the end of the range
 	int locallo = lo;
 	int localhi = hi;
+    size_t sizeofmap = *statustablesize;
 
 	// If start or end is NULL, adjust to nearest valid entries
     if (start == NULL) {
@@ -118,8 +117,8 @@ void PrintRange(FILE* stream, int lo, int hi) {
     }
 	// Similar logic for end
     if (end == NULL) {
-		if (hi >= statustableend)                       // if hi is greater than or equal to the highest code
-		{
+		if (hi >= (STATUSTABLE + sizeofmap)->code)                    // if hi is greater than or equal to the highest code
+	{
 			end = statustableend() - 1;                 // set end to the last valid entry
 			localhi = end->code;
         }
