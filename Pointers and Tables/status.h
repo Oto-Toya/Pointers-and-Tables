@@ -26,14 +26,14 @@ const StatusEntry* statustablebegin(void);
 const StatusEntry* statustableend(void);
 size_t statustablesize(void);
 
-// You implement these:
+
 const StatusEntry* LookupStatus(int code);
 
 void PrintRange(FILE* stream, int lo, int hi);
 
 void PrintStatus(FILE* stream, const StatusEntry* status);
 
-// Optional (stretch)
+
 const StatusEntry* BinaryLookupStatus();
 
 #endif // _STATUS_H_

@@ -99,27 +99,32 @@ void PrintRange(FILE* stream, int lo, int hi) {
 	const StatusEntry* end = LookupStatus(hi);          // find the end of the range
 	int locallo = lo;
 	int localhi = hi;
+
+	// If start or end is NULL, adjust to nearest valid entries
     if (start == NULL) {
-        if (lo <= (STATUSTABLE+0)->code)
+		if (lo <= (STATUSTABLE + 0)->code)              // if lo is less than or equal to the lowest code
         {
-			start = statustablebegin();
-			locallo = start->code;
+			start = statustablebegin();                 // set start to the beginning of the table
+			locallo = start->code;                      // update locallo to the lowest code
         }
         else
         { 
+			// increment locallo until a valid status is found
             while (start == NULL) {
 			    locallo = locallo + 1;
-                start = LookupStatus(locallo);
+				start = LookupStatus(locallo);          // look for the next valid status
             }
         }
     }
+	// Similar logic for end
     if (end == NULL) {
-        if (hi >= 511)
+		if (hi >= statustableend)                       // if hi is greater than or equal to the highest code
 		{
-			end = statustableend() - 1;
+			end = statustableend() - 1;                 // set end to the last valid entry
 			localhi = end->code;
         }
         else{
+			// decrement localhi until a valid status is found
             while (end == NULL) {
 			localhi = localhi - 1;
             end = LookupStatus(localhi);
@@ -127,17 +132,17 @@ void PrintRange(FILE* stream, int lo, int hi) {
         }
     }
 	
-	const StatusEntry* ptr = start;
-    ;
+	const StatusEntry* ptr = start;                     // ptr starts at the beginning of the range
+    
+	// Print statuses from locallo to localhi, if within bounds
     while (locallo <= ptr->code && ptr->code <= localhi && ptr != statustableend()-1)
     {
-		PrintStatus(stream, ptr);
+		PrintStatus(stream, ptr);                       // print the current status
 		ptr++;
     }
-    // TODO: Iterate with a pointer and print entries in [lo, hi].
+    
 }
 
 void PrintStatus(FILE* stream, const StatusEntry* status) {
-	fprintf(stream, "%d %s (%s)\n", status->code, status->name, status->category);
-    // TODO
+	fprintf(stream, "%d %s (%s)\n", status->code, status->name, status->category);  // Print formatted status information
 }
