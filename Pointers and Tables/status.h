@@ -1,8 +1,9 @@
 #pragma once
-/* file: status.h
- * author: Gary Hubley
- * created: 2026/01/17
- * description: Contains data structures and declarations for HTTP status table
+/*
+ * File: status.h
+ * Author: Gary Hubley
+ * Created: 2026/01/17
+ * Description: Contains data structures and declarations for HTTP status table
  */
 
 #ifndef _STATUS_H_
@@ -26,15 +27,11 @@ const StatusEntry* statustablebegin(void);
 const StatusEntry* statustableend(void);
 size_t statustablesize(void);
 
-
 const StatusEntry* LookupStatus(int code);
 
 void PrintRange(FILE* stream, int lo, int hi);
 
 void PrintStatus(FILE* stream, const StatusEntry* status);
-
-
-const StatusEntry* BinaryLookupStatus();
 
 #endif // _STATUS_H_
 
